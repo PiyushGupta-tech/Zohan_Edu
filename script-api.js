@@ -137,7 +137,7 @@ const coursesPerPage = 10;
 
 // Relies on MOCK_COURSES from data/courses_data.js
 // Make sure that file is loaded BEFORE this script in HTML
-async function fetchCourses(category = 'all', page = 1, searchQuery = '') {
+async function fetchCourses(category = 'all', page = 1, searchQuery = '', perPage = null) {
     if (typeof MOCK_COURSES === 'undefined') {
         console.error('MOCK_COURSES not found. Ensure courses_data.js is included.');
         return { courses: [], totalPages: 0 };
@@ -160,11 +160,12 @@ async function fetchCourses(category = 'all', page = 1, searchQuery = '') {
         );
     }
     
-    // Pagination
+    // Pagination: use perPage if provided (e.g. admin dashboard can pass a large number to get all)
+    const limit = perPage != null ? perPage : coursesPerPage;
     const totalCourses = filtered.length;
-    const totalPages = Math.ceil(totalCourses / coursesPerPage);
-    const start = (page - 1) * coursesPerPage;
-    const end = start + coursesPerPage;
+    const totalPages = Math.ceil(totalCourses / limit) || 1;
+    const start = (page - 1) * limit;
+    const end = start + limit;
     
     const paginatedCourses = filtered.slice(start, end);
     courses = paginatedCourses; // Update global variable used by other functions

@@ -759,7 +759,8 @@
         // Initialize dashboard
         window.addEventListener('load', async () => {
             loadUserData();
-            await fetchCourses();  // Fetch courses from API first
+            // Fetch ALL courses for admin (no 10-course limit)
+            await fetchCourses('all', 1, '', 9999);
             loadStatistics();
             loadCoursesTable();
             loadStudentsTable();
