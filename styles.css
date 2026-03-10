@@ -154,15 +154,80 @@ body {
     color: var(--white);
     padding: 100px 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero-content h1 {
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content.hero-animate .hero-title {
+    animation: heroTitleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-content.hero-animate .hero-subtitle {
+    opacity: 0;
+    animation: heroSubtitleIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+
+.hero-content.hero-animate .hero-cta {
+    opacity: 0;
+    animation: heroCtaIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+@keyframes heroTitleIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroSubtitleIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 0.95;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroCtaIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hero-content h1,
+.hero-content .hero-title {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: var(--white);
 }
 
-.hero-content p {
+.hero-content p,
+.hero-content .hero-subtitle {
     font-size: 1.3rem;
     margin-bottom: 2rem;
     opacity: 0.95;
@@ -378,10 +443,51 @@ body {
     align-items: center;
 }
 
-.about-section h2 {
+.about-section h2,
+.about-title {
     font-size: 2.2rem;
     margin-bottom: 1.5rem;
     color: var(--text-main);
+}
+
+.about-text.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-text.animate-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-text.animate-in .about-title {
+    animation: aboutTitleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+@keyframes aboutTitleIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.about-list-item {
+    padding: 0.8rem 0;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, color 0.2s ease;
+    transition-delay: calc(0.1s + var(--i, 0) * 0.08s);
+}
+
+.about-text.animate-in .about-list-item {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.about-list-item:hover {
+    color: var(--primary-mint-dark);
+    padding-left: 8px;
 }
 
 .about-list {
@@ -407,6 +513,32 @@ body {
     border-radius: 8px;
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 8px rgba(26, 54, 93, 0.06);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    transition-delay: calc(0.15s + var(--i, 0) * 0.12s);
+}
+
+.stat.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.stat:hover {
+    box-shadow: 0 12px 28px rgba(79, 209, 197, 0.25);
+    border-color: var(--accent-mint);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    color: var(--primary-mint-dark);
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.stat:hover .stat-number {
+    transform: scale(1.08);
 }
 
 .stat h3 {
@@ -425,6 +557,48 @@ body {
     color: var(--white);
     padding: 60px 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.newsletter-inner {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.newsletter-inner.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.newsletter-inner.animate-in .newsletter-form {
+    animation: newsletterFormIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+@keyframes newsletterFormIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newsletter-form:focus-within {
+    transform: scale(1.02);
 }
 
 .newsletter-section h2 {
@@ -439,15 +613,6 @@ body {
     color: var(--white);
 }
 
-.newsletter-form {
-    display: flex;
-    gap: 1rem;
-    max-width: 500px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 .newsletter-form input {
     flex: 1;
     min-width: 200px;
@@ -457,6 +622,12 @@ body {
     font-size: 1rem;
     background-color: var(--white);
     color: var(--text-main);
+    transition: box-shadow 0.3s ease;
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
 }
 
 /* Footer */
@@ -474,9 +645,26 @@ body {
     margin-bottom: 2rem;
 }
 
+.footer-section {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(0.1s + var(--i, 0) * 0.1s);
+}
+
+.footer-section.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .footer-section h3 {
     margin-bottom: 1rem;
     color: var(--text-main);
+    transition: color 0.2s ease;
+}
+
+.footer-section:hover h3 {
+    color: var(--primary-mint-dark);
 }
 
 .footer-section ul {
@@ -490,11 +678,12 @@ body {
 .footer-section a {
     color: var(--text-tertiary);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, padding-left 0.2s ease;
 }
 
 .footer-section a:hover {
     color: var(--primary-mint);
+    padding-left: 4px;
 }
 
 .social-links {
@@ -508,6 +697,14 @@ body {
     padding-top: 2rem;
     border-top: 1px solid var(--border-color);
     color: var(--text-tertiary);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+
+.footer-bottom.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Modal */

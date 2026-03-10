@@ -35,10 +35,10 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Learn From The Best</h1>
-            <p>Upskill yourself with industry-relevant courses taught by experts</p>
-            <button class="btn btn-primary">Explore Courses</button>
+        <div class="hero-content hero-animate">
+            <h1 class="hero-title">Learn From The Best</h1>
+            <p class="hero-subtitle">Upskill yourself with industry-relevant courses taught by experts</p>
+            <button class="btn btn-primary hero-cta">Explore Courses</button>
         </div>
     </section>
 
@@ -76,28 +76,28 @@
     <section class="about-section" id="about">
         <div class="container">
             <div class="about-content">
-                <div class="about-text">
-                    <h2>Why Choose ZOHANEDU?</h2>
+                <div class="about-text animate-on-scroll">
+                    <h2 class="about-title">Why Choose ZOHANEDU?</h2>
                     <ul class="about-list">
-                        <li>✓ Expert instructors with industry experience</li>
-                        <li>✓ Live classes and interactive sessions</li>
-                        <li>✓ Lifetime access to course materials</li>
-                        <li>✓ Career support and job assistance</li>
-                        <li>✓ Affordable pricing with payment plans</li>
-                        <li>✓ Certificate upon completion</li>
+                        <li class="about-list-item" style="--i: 0">✓ Expert instructors with industry experience</li>
+                        <li class="about-list-item" style="--i: 1">✓ Live classes and interactive sessions</li>
+                        <li class="about-list-item" style="--i: 2">✓ Lifetime access to course materials</li>
+                        <li class="about-list-item" style="--i: 3">✓ Career support and job assistance</li>
+                        <li class="about-list-item" style="--i: 4">✓ Affordable pricing with payment plans</li>
+                        <li class="about-list-item" style="--i: 5">✓ Certificate upon completion</li>
                     </ul>
                 </div>
                 <div class="about-stats">
-                    <div class="stat">
-                        <h3>50K+</h3>
+                    <div class="stat animate-on-scroll" style="--i: 0">
+                        <h3 class="stat-number">50K+</h3>
                         <p>Students Enrolled</p>
                     </div>
-                    <div class="stat">
-                        <h3>100+</h3>
+                    <div class="stat animate-on-scroll" style="--i: 1">
+                        <h3 class="stat-number">100+</h3>
                         <p>Courses Available</p>
                     </div>
-                    <div class="stat">
-                        <h3>4.8/5</h3>
+                    <div class="stat animate-on-scroll" style="--i: 2">
+                        <h3 class="stat-number">4.8/5</h3>
                         <p>Average Rating</p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
 
     <!-- Newsletter Section -->
     <section class="newsletter-section">
-        <div class="container">
+        <div class="container newsletter-inner animate-on-scroll">
             <h2>Subscribe to Our Newsletter</h2>
             <p>Get updates on new courses and learning opportunities</p>
             <form class="newsletter-form" id="newsletterForm">
@@ -121,11 +121,11 @@
     <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
+                <div class="footer-section animate-on-scroll" style="--i: 0">
                     <h3>About Zohan's Infotech</h3>
                     <p>We provide high-quality online education to help you advance your career in technology and innovation.</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-section animate-on-scroll" style="--i: 1">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="#home">Home</a></li>
@@ -138,15 +138,15 @@
                     </ul>
                 </div>
 
-                <div class="footer-section">
+                <div class="footer-section animate-on-scroll" style="--i: 2">
                     <h3>Contact</h3>
                     <p><strong>ZOHAN'S INFOTECH PRIVATE LIMITED</strong></p>
-                    <p>Support: <a href="mailto:zhnttt.info@gmail.com">zhnttt.info@gmail.com</a></p>
-                    <p>No. 102, 1st Floor, House of Lords, 16/21 St Marks Road, Bangalore North, Bangalore G.P.O., Bangalore-560001, Karnataka</p>
-                    <p>Phone: +91 9740545878</p>
+                    <p>Support: <a href="mailto:zhninfotech@gmail.com">zhninfotech@gmail.com</a></p>
+                    <p>Unit No 102, 1st Floor, House of Lords Building, St Marks Road, Bengaluru, Bengaluru Urban, Karnataka - 560001</p>
+                    <p>Phone: +91 9108940254</p>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <div class="footer-bottom animate-on-scroll">
                 <p>&copy; 2024 ZOHAN'S INFOTECH PRIVATE LIMITED. All Rights Reserved.</p>
             </div>
         </div>
@@ -229,6 +229,20 @@
             }
         }
 
+        // Scroll-triggered animations: add .animate-in when element enters viewport
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+            document.querySelectorAll('.newsletter-inner').forEach(el => observer.observe(el));
+        }
+
         // Initialize on page load
         window.addEventListener('load', async () => {
             console.log('Page loaded');
@@ -255,6 +269,7 @@
             await displayCourses('all', 1);
             setupFilterButtons();
             setupEventListeners();
+            initScrollAnimations();
         });
     </script>
 </body>

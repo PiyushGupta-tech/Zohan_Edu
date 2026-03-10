@@ -347,16 +347,8 @@ function closeModal() {
     document.getElementById('courseModal').style.display = 'none';
 }
 
-// Buy Now Function
+// Buy Now Function - Allow guest checkout: redirect to cart/checkout (login required on Place Order)
 function buyNow(courseId) {
-    // Check if user is logged in
-    if (!isUserLoggedIn()) {
-        if (confirm('You need to login to purchase courses. Redirect to login?')) {
-            window.location.href = '/login';
-        }
-        return;
-    }
-
     const course = courses.find(c => c.id === courseId);
     if (!course) return;
     

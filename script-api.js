@@ -570,15 +570,8 @@ function closeModal() {
     }
 }
 
-// Buy Now Function
+// Buy Now Function - Allow guest checkout: add to cart and redirect to checkout (login can be required on Place Order)
 async function buyNow(courseId) {
-    if (!isUserLoggedIn()) {
-        if (confirm('You need to login to purchase courses. Redirect to login?')) {
-            window.location.href = '/login';
-        }
-        return;
-    }
-
     const course = await getCourseById(courseId);
     if (!course) return;
     

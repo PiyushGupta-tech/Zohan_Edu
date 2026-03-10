@@ -46,7 +46,10 @@ const server = http.createServer((req, res) => {
   }
   if (urlPath === '/') urlPath = '/index.html';
 
-  const filePath = path.join(root, path.normalize(urlPath).replace(/^(\.\.(\/|\\|$))+/, ''));
+  // Use only the pathname for the file path (strip query string)
+  const pathnameOnly = urlPath.split('?')[0];
+  const relativePath = path.normalize(pathnameOnly.replace(/^\//, '')).replace(/^(\.\.(\/|\\|$))+/, '');
+  const filePath = path.join(root, relativePath);
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
