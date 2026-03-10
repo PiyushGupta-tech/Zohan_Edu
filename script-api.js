@@ -385,7 +385,10 @@ function createCourseCard(course) {
             </div>
             <div class="course-footer">
                 <span class="course-price">₹${course.price.toLocaleString()}</span>
-                <button class="course-btn" onclick="event.stopPropagation(); buyNow('${course._id}')">Buy Now</button>
+                <div class="course-actions">
+                    <button class="course-btn course-btn-cart" onclick="event.stopPropagation(); addToCart('${course._id}')">Add to Cart</button>
+                    <button class="course-btn" onclick="event.stopPropagation(); buyNow('${course._id}')">Buy Now</button>
+                </div>
             </div>
         </div>
     `;
@@ -568,6 +571,36 @@ function closeModal() {
     if (modal) {
         modal.style.display = 'none';
     }
+}
+
+// Toast notification (replaces alert for add-to-cart)
+function showToast(message, type) {
+    type = type || 'success';
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : 'ℹ'}</span><span class="toast-message">${message}</span>`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('toast-show'));
+    setTimeout(() => {
+        toast.classList.remove('toast-show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
+}
+
+// Add to Cart - add course to cart and go to checkout/cart page
+async function addToCart(courseId) {
+    const course = await getCourseById(courseId);
+    if (!course) return;
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingItem = cart.find(item => item.id === course._id);
+    if (!existingItem) {
+        cart.push({ id: course._id, title: course.title, price: course.price, quantity: 1 });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        showToast(`${course.title} added to cart!`, 'success');
+    } else {
+        showToast('This course is already in your cart.', 'info');
+    }
+    setTimeout(() => { window.location.href = '/checkout'; }, 600);
 }
 
 // Buy Now Function - Allow guest checkout: add to cart and redirect to checkout (login can be required on Place Order)

@@ -406,12 +406,21 @@ body {
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .course-price {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--primary-mint-dark);
+}
+
+.course-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .course-btn {
@@ -423,11 +432,24 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .course-btn:hover {
     background-color: var(--primary-mint-dark);
     transform: scale(1.02);
+}
+
+.course-btn-cart {
+    background-color: transparent;
+    color: var(--primary-mint-dark);
+    border: 2px solid var(--primary-mint);
+}
+
+.course-btn-cart:hover {
+    background-color: var(--bg-mint-light);
+    color: var(--primary-mint-dark);
+    border-color: var(--primary-mint-dark);
 }
 
 /* About Section */
@@ -776,6 +798,67 @@ body {
 #enrollBtn {
     width: 100%;
     margin-top: 1rem;
+}
+
+/* Toast notification (add to cart, etc.) */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 40px rgba(26, 54, 93, 0.2);
+    z-index: 9999;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+    max-width: calc(100vw - 32px);
+}
+
+.toast.toast-show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast-success {
+    background: var(--primary-mint);
+    color: var(--white);
+    border: 1px solid var(--primary-mint-dark);
+}
+
+.toast-info {
+    background: var(--white);
+    color: var(--text-main);
+    border: 1px solid var(--accent-mint);
+}
+
+.toast-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.toast-message {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+    .toast {
+        bottom: 16px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+    .toast-message {
+        white-space: normal;
+        max-width: 260px;
+    }
 }
 
 /* Responsive Design */
